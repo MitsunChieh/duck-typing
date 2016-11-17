@@ -1,14 +1,15 @@
 class Messenger
   def message
-    head = self.class.name.match(/(.*)Messenger/)[1]
-    "#{head.downcase} message"
+    resource = self.class.name.match(/(.*)Messenger/)[1]
+    "#{resource.downcase} message"
   end
 end
 
-class TextMessenger < Messenger; end
-class PictureMessenger < Messenger; end
-class VideoMessenger < Messenger; end
-class DocumentMessenger < Messenger; end
+resource = %w{Text Picture Video Document}
+
+resource.each do |resource|
+  eval("class #{resource}Messenger < Messenger; end")
+end
 
 class SlackMessenger
   def message(messenger)
